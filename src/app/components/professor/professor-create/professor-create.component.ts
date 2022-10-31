@@ -28,7 +28,6 @@ export class ProfessorCreateComponent implements OnInit {
       this.professorService.showMessage('Professor criado!')
       this.router.navigate(['/professores'])
     })
-    this.professorService.showMessage(" Professor criado! ");
   }
 
   cancel(): void {

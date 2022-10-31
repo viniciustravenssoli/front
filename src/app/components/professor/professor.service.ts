@@ -1,4 +1,5 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { error } from '@angular/compiler/src/util';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EMPTY, Observable } from 'rxjs';
@@ -32,11 +33,6 @@ export class ProfessorService {
     );
   }
 
-  ErrorHandler(e : any) : Observable<any> {
-    this.showMessage('Ocorreu um erro!', true)
-    return EMPTY
-  }
-
   read(): Observable<Professor[]> {
     return this.http.get<Professor[]>(this.baseUrl).pipe(
       map(obj => obj),
@@ -66,6 +62,11 @@ export class ProfessorService {
       map(obj => obj),
       catchError(e => this.ErrorHandler(e))
     );
+  }
+
+  ErrorHandler(error : HttpErrorResponse) : Observable<any> {
+    this.showMessage(`Ocorreu um erro! ${error.message}`, true)
+    return EMPTY
   }
 
 }
